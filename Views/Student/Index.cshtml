@@ -1,0 +1,241 @@
+﻿
+
+@model List<StudentsModel>
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    
+    string username = User.Identity.Name;
+    
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+
+    
+    </head>
+    <body>
+
+@if(User.IsInRole("user"))
+{
+    <div class="container p-3">
+
+
+        <div class="row pt-4">
+
+            <div class="col-6">
+                <h2 class="text-primary ml-5 pl-5">
+                    Students List
+                </h2>
+
+            </div>
+            <div class="col-6 text-end">
+               
+                <div id="model_popup">
+                    <!-- Button trigger modal -->
+                   
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Add Students
+                    </button>
+                   
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Student Registeration Model</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form asp-controller="Student" asp-action="Create">
+                                
+                                        <div class="form-group">
+                                            <label for="name">Name:</label>
+                                            <input type="text" class="form-control" id="name" name="Name" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="program">Program:</label>
+                                            <input type="text" class="form-control" id="program" name="Program" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rollNo">Roll No:</label>
+                                            <input type="number" class="form-control" id="rollNo" name="RollNo" required />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="save-changes-btn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" id="save-changes-btn" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                    
+                              </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Student Name
+                    </th>
+                    <th>
+                        Program
+                    </th>
+                    <th>Roll No</th>
+                    <th>Created By</th>
+                     
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+
+                @foreach (var obj in Model)
+                {
+
+                    <tr>
+                        
+                        <td width="20%">
+                            @obj.Name
+                          
+                        </td>
+                        <td width="20%">
+                            @obj.Program
+                        </td>
+                        <td width="20%">
+                            @obj.RollNo
+                        </td>
+
+                        <td width="20%">
+                            @ViewData["UserId"]
+                        </td>
+                        <td width="20%">
+                            <!--Edit Button trigger modal -->
+                            <button type="button" class="btn btn-primary" asp-route-id="@obj.ID" data-toggle="modal" data-target="#exampleModal1-@obj.ID">
+                                Edit
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal1-@obj.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form asp-controller="Student" asp-action="Edit" method="post">
+                                                <input type="hidden" name="id" value="@obj.ID" />
+
+                                                <div class="form-group">
+                                                    <label for="name">Name:</label>
+                                                    <input type="text" class="form-control" id="name" name="Name" value="@obj.Name" required />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="program">Program:</label>
+                                                    <input type="text" class="form-control" id="program" name="Program" value="@obj.Program" required />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="rollno">Program:</label>
+                                                    <input type="text" class="form-control" id="program" name="RollNo" value="@obj.RollNo" required />
+                                                </div>
+                                               
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Edit Button trigger modal -->
+                            <button type="button" class="btn btn-primary" asp-route-id="@obj.ID" data-toggle="modal" data-target="#exampleModal2-@obj.ID">
+                                Delete
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal2-@obj.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Student</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form asp-controller="Student" asp-action="Delete" method="post">
+                                                <input type="hidden" name="id" value="@obj.ID" />
+
+                                                <div class="form-group">
+                                                    <label for="name">Name:</label>
+                                                    <input type="text" class="form-control" id="name" name="Name" value="@obj.Name" required disabled />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="program">Program:</label>
+                                                    <input type="text" class="form-control" id="program" name="Program" value="@obj.Program" required disabled />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="rollno">Program:</label>
+                                                    <input type="text" class="form-control" id="program" name="RollNo" value="@obj.RollNo" required disabled />
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                }
+            </tbody>
+
+        </table>
+    </div>
+    
+}
+    <script>
+  
+            debugger;
+            const saveBtn = document.querySelector("#save-changes-btn");
+            saveBtn.addEventListener('click',function(){
+                alert("HAYE HAYE");
+            });
+
+    </script>
+
+</body>
+ </html> 

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\shahi\source\repos\LoginSystem\obj\Release\net6.0\win-x86\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\shahi\source\repos\LoginSystem\obj\Release\net6.0\win-x86\PubTmp\EFSQLScripts\LoginSystem.Models.Domain.DatabaseContext.sql" />
+</sitemanifest>
